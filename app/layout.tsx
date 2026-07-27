@@ -13,14 +13,14 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Makarov Team — клуб единоборств",
+  title: "Force Team — клуб единоборств",
   description: "Самбо, боевое самбо и джиу-джитсу для детей от 4 лет и взрослых.",
   other: {
     "codex-preview": "development",
   },
   icons: {
-    icon: "/favicon.svg",
-    shortcut: "/favicon.svg",
+    icon: "/bear-sambo.png",
+    shortcut: "/bear-sambo.png",
   },
 };
 

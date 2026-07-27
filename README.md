@@ -144,6 +144,8 @@ tests/           — автоматические проверки
 **Степанов Дмитрий** — Prompt Engineer · AI Project Manager & Digital Strategist  
 
 - GitHub: [dimitry8st-prog](https://github.com/dimitry8st-prog)  
-- Telegram: [@Dmitryprompt](https://t.me/Dmitryprompt)  
+- Telegram: [@stepanovda_craft](https://t.me/stepanovda_craft)  
+- Электронная почта: [dimitry8st@gmail.com](mailto:dimitry8st@gmail.com)  
+- Электронная почта: [dimitry.analytix@gmail.com](mailto:dimitry.analytix@gmail.com) 
 
 Проект разработан как демонстрационный кейс портфолио: спортивный лендинг с ясной целью конверсии и готовой адаптивной основой под реального заказчика.

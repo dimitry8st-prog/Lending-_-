@@ -15,8 +15,20 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Force Team — клуб единоборств",
   description: "Самбо, боевое самбо и джиу-джитсу для детей от 4 лет и взрослых.",
-  other: {
-    "codex-preview": "development",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://example.com"),
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    locale: "ru_RU",
+    title: "Force Team — клуб единоборств",
+    description: "Самбо, боевое самбо и джиу-джитсу для детей от 4 лет и взрослых.",
+    images: ["/bear-sambo.png"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Force Team — клуб единоборств",
+    description: "Самбо, боевое самбо и джиу-джитсу для детей от 4 лет и взрослых.",
+    images: ["/bear-sambo.png"],
   },
   icons: {
     icon: "/bear-sambo.png",

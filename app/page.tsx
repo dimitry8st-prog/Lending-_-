@@ -31,7 +31,7 @@ const scheduleLabels = ["Группа", "Направление", "Дни", "В�
 
 export default function Home() {
   const [open, setOpen] = useState(false);
-  const [sent, setSent] = useState(false);
+  const [formState, setFormState] = useState<"idle" | "sending" | "success" | "error">("idle");
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
@@ -55,10 +55,24 @@ export default function Home() {
     };
   }, []);
 
-  function submit(e: FormEvent<HTMLFormElement>) {
+  async function submit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setSent(true);
-    e.currentTarget.reset();
+    const form = e.currentTarget;
+    const data = Object.fromEntries(new FormData(form).entries());
+
+    setFormState("sending");
+    try {
+      const response = await fetch("/api/lead", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      if (!response.ok) throw new Error("lead submit failed");
+      form.reset();
+      setFormState("success");
+    } catch {
+      setFormState("error");
+    }
   }
 
   return (
@@ -339,23 +353,28 @@ export default function Home() {
           </strong>
         </div>
         <form onSubmit={submit} noValidate={false}>
+          <label className="hp" aria-hidden="true">
+            Компания
+            <input name="company" tabIndex={-1} autoComplete="off" />
+          </label>
           <label>
             Имя ребёнка
-            <input required placeholder="Максим" autoComplete="name" />
+            <input name="athleteName" required placeholder="Максим" autoComplete="name" />
           </label>
           <div>
             <label>
               Возраст ребёнка
-              <input required type="number" min={4} max={99} placeholder="8" />
+              <input name="athleteAge" required type="number" min={4} max={99} placeholder="8" />
             </label>
             <label>
               Имя родителя
-              <input required placeholder="Андрей" autoComplete="name" />
+              <input name="parentName" required placeholder="Андрей" autoComplete="name" />
             </label>
           </div>
           <label>
             Телефон
             <input
+              name="phone"
               required
               type="tel"
               pattern="[+0-9 ()\-]{10,20}"
@@ -366,7 +385,7 @@ export default function Home() {
           <div>
             <label>
               Филиал
-              <select required defaultValue="">
+              <select name="branch" required defaultValue="">
                 <option value="" disabled>
                   Выберите
                 </option>
@@ -376,7 +395,7 @@ export default function Home() {
             </label>
             <label>
               Направление
-              <select required defaultValue="">
+              <select name="sport" required defaultValue="">
                 <option value="" disabled>
                   Выберите
                 </option>
@@ -387,16 +406,24 @@ export default function Home() {
             </label>
           </div>
           <label className="check">
-            <input required type="checkbox" />
-            Согласен на обработку персональных данных
+            <input name="consent" required type="checkbox" value="yes" />
+            <span>
+              Согласен на обработку персональных данных.{" "}
+              <a href="/privacy">Политика конфиденциальности</a> ·{" "}
+              <a href="/consent">Согласие</a>
+            </span>
           </label>
-          <button className="btn" type="submit">
-            Отправить заявку →
+          <button className="btn" type="submit" disabled={formState === "sending"}>
+            {formState === "sending" ? "Отправляем…" : "Отправить заявку →"}
           </button>
-          {sent && (
+          {formState === "success" && (
             <p className="success" role="status">
-              Форма заполнена. Для реальной отправки подключим CRM или почту
-              клуба.
+              Заявка отправлена. Представитель клуба свяжется с вами.
+            </p>
+          )}
+          {formState === "error" && (
+            <p className="error" role="alert">
+              Не удалось отправить заявку. Попробуйте ещё раз или свяжитесь с клубом напрямую.
             </p>
           )}
         </form>
@@ -418,7 +445,8 @@ export default function Home() {
         </a>
         <p>Самбо · Боевое самбо · Джиу-джитсу</p>
         <small>
-          © 2026 Force Team. Информация не является публичной офертой.
+          © 2026 Force Team. Информация не является публичной офертой.{" "}
+          <a href="/privacy">Конфиденциальность</a> · <a href="/consent">ПДн</a>
         </small>
       </footer>
     </main>

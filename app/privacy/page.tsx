@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = { title: "Политика конфиденциальности — Force Team" };
@@ -5,7 +6,7 @@ export const metadata: Metadata = { title: "Политика конфиденц�
 export default function PrivacyPage() {
   return (
     <main className="legal">
-      <p><a href="/">← На главную</a></p>
+      <p><Link href="/">← На главную</Link></p>
       <h1>Политика конфиденциальности</h1>
       <p>Эта страница подготовлена как production-шаблон для сайта Force Team. До реального коммерческого запуска владелец клуба должен указать полное наименование/ФИО оператора персональных данных, контактный e-mail, адрес и иные обязательные реквизиты.</p>
       <h2>Какие данные обрабатываются</h2>
